@@ -1,9 +1,17 @@
 import { Card } from '$/common/components/card';
-import { useState } from 'react';
-import { Button } from './button';
+import { useState, type FormEvent } from 'react';
 
 export const Counter = () => {
   const [counter, setCounter] = useState<number>(0);
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const raw = formData.get('counter'); // string | File | null
+
+    setCounter(Number(raw));
+  }
 
   return (
     <Card className="border-primary-500 flex w-2/3 flex-col items-center gap-8">
@@ -14,13 +22,14 @@ export const Counter = () => {
         <button onClick={() => setCounter(0)}>🔁 Reset</button>
         <button onClick={() => setCounter((prev) => prev + 1)}>➕ Increment</button>
       </div>
-      <form className="flex items-center gap-2" onSubmit={(e) => e.preventDefault()}>
+
+      <form className="flex items-center gap-2" onSubmit={handleSubmit}>
         <input
           className="ring-primary-600 focus:border-primary-800 rounded border border-slate-500 px-4 py-2 outline-none focus:ring-2"
           type="number"
           value={0}
         />
-        <Button>Update Counter</Button>
+        <button>Update Counter</button>
       </form>
     </Card>
   );
