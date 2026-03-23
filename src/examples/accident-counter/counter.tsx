@@ -1,5 +1,19 @@
 import { Card } from '$/common/components/card';
-import { useState, type FormEvent } from 'react';
+import { useState, type Dispatch, type FormEvent } from 'react';
+
+type CounterControlsProps = {
+  setCounter: Dispatch<React.SetStateAction<number>>;
+};
+
+function CounterControl({ setCounter }: CounterControlsProps) {
+  return (
+    <div className="flex gap-2">
+      <button onClick={() => setCounter((prev) => prev - 1)}>➖ Decrement</button>
+      <button onClick={() => setCounter(0)}>🔁 Reset</button>
+      <button onClick={() => setCounter((prev) => prev + 1)}>➕ Increment</button>
+    </div>
+  );
+}
 
 export const Counter = () => {
   const [counter, setCounter] = useState<number>(0);
@@ -17,11 +31,8 @@ export const Counter = () => {
     <Card className="border-primary-500 flex w-2/3 flex-col items-center gap-8">
       <h1>Days Since the Last Accident</h1>
       <p className="text-6xl">{counter}</p>
-      <div className="flex gap-2">
-        <button onClick={() => setCounter((prev) => prev - 1)}>➖ Decrement</button>
-        <button onClick={() => setCounter(0)}>🔁 Reset</button>
-        <button onClick={() => setCounter((prev) => prev + 1)}>➕ Increment</button>
-      </div>
+
+      <CounterControl setCounter={setCounter} />
 
       <form className="flex items-center gap-2" onSubmit={handleSubmit}>
         <input
