@@ -1,7 +1,14 @@
 import { Card } from '$/common/components/card';
-import { useState, type ComponentPropsWithoutRef, type Dispatch, type FormEvent } from 'react';
+import {
+  useReducer,
+  useState,
+  type ComponentPropsWithoutRef,
+  type Dispatch,
+  type FormEvent,
+} from 'react';
 
 import { Button } from './button';
+import { counterReducer, initialState } from './counter-reducer';
 
 type CounterControlsProps = {
   setCounter: Dispatch<React.SetStateAction<number>>;
@@ -31,7 +38,8 @@ function CounterForm({ onSubmit }: ComponentPropsWithoutRef<'form'>) {
 }
 
 export const Counter = () => {
-  const [counter, setCounter] = useState<number>(0);
+  // const [counter, setCounter] = useState<number>(0);
+  const [counter, dispatch] = useReducer(counterReducer, initialState);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
