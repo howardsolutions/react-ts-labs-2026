@@ -1,5 +1,7 @@
 import { Card } from '$/common/components/card';
-import { useState, type Dispatch, type FormEvent } from 'react';
+import { useState, type ComponentPropsWithoutRef, type Dispatch, type FormEvent } from 'react';
+
+import { Button } from './button';
 
 type CounterControlsProps = {
   setCounter: Dispatch<React.SetStateAction<number>>;
@@ -8,10 +10,23 @@ type CounterControlsProps = {
 function CounterControl({ setCounter }: CounterControlsProps) {
   return (
     <div className="flex gap-2">
-      <button onClick={() => setCounter((prev) => prev - 1)}>➖ Decrement</button>
-      <button onClick={() => setCounter(0)}>🔁 Reset</button>
-      <button onClick={() => setCounter((prev) => prev + 1)}>➕ Increment</button>
+      <Button onClick={() => setCounter((prev) => prev - 1)}>➖ Decrement</Button>
+      <Button onClick={() => setCounter(0)}>🔁 Reset</Button>
+      <Button onClick={() => setCounter((prev) => prev + 1)}>➕ Increment</Button>
     </div>
+  );
+}
+
+function CounterForm({ onSubmit }: ComponentPropsWithoutRef<'form'>) {
+  return (
+    <form className="flex items-center gap-2" onSubmit={onSubmit}>
+      <input
+        className="ring-primary-600 focus:border-primary-800 rounded border border-slate-500 px-4 py-2 outline-none focus:ring-2"
+        type="number"
+        value={0}
+      />
+      <Button>Update Counter</Button>
+    </form>
   );
 }
 
@@ -33,15 +48,7 @@ export const Counter = () => {
       <p className="text-6xl">{counter}</p>
 
       <CounterControl setCounter={setCounter} />
-
-      <form className="flex items-center gap-2" onSubmit={handleSubmit}>
-        <input
-          className="ring-primary-600 focus:border-primary-800 rounded border border-slate-500 px-4 py-2 outline-none focus:ring-2"
-          type="number"
-          value={0}
-        />
-        <button>Update Counter</button>
-      </form>
+      <CounterForm onSubmit={handleSubmit} />
     </Card>
   );
 };
