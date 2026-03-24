@@ -67,3 +67,5 @@ You can use the satisfies keyword with the z.ZodType utility type. For example: 
 Zod schemas provide compile-time safety through TypeScript types and runtime safety through validation.
 
 This ensures that data from external sources (APIs, user input, local storage) actually matches the EXPECTED structure at RUNTIME, preventing issues like trying to parse HTML as JSON or accessing properties that don't exist.
+
+- Zod is very good at MAKING SURE that the things are what you think they are

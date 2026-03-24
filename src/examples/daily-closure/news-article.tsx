@@ -9,12 +9,20 @@ type NewsArticleProps = {
 };
 
 const PostSchema = z.object({
-  id: z.number(),
+  id: z.coerce.number(),
   title: z.string(),
-  body: z.string(),
+  body: z.string().nullable(),
+  authorEmail: z.email(),
+  published: z.coerce.boolean(),
+  tags: z.array(z.string()).default([]),
+  metadata: z.record(z.string(), z.unknown()),
 });
 
 type Post = z.infer<typeof PostSchema>;
+
+// function isPost(value: unknown): value is Post {
+//   return PostSchema.safeParse(value).success;
+// }
 
 const fetchArticle = async (id: number): Promise<Post> => {
   const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
