@@ -1,8 +1,8 @@
 import { Card } from '$/common/components/card';
-import { useEffect, useState } from 'react';
+import { use } from 'react';
 // import type { Post } from './types';
-import { currentDate } from './utilities';
 import z from 'zod';
+import { currentDate } from './utilities';
 
 type NewsArticleProps = {
   id: number;
@@ -34,13 +34,17 @@ const fetchArticle = async (id: number): Promise<Post> => {
 export const NewsArticle = ({ id = 1 }: NewsArticleProps) => {
   // Important: The type for article is any because the API returns.
 
-  const [article, setArticle] = useState<Post | null>(null);
+  // const [article, setArticle] = useState<Post | null>(null);
 
-  useEffect(() => {
-    fetchArticle(id).then((data) => setArticle(data));
-  }, [id]);
+  // useEffect(() => {
+  //   fetchArticle(id).then((data) => setArticle(data));
+  // }, [id]);
 
-  if (!article) return null;
+  // if (!article) return null;
+
+  // New use() hook and suspense types in React 19 used for resolving promises of a suspense
+
+  const article = use(fetchArticle(id));
 
   return (
     <Card as="article" className="space-y-4 font-mono md:first:col-span-2">
