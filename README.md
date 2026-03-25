@@ -69,3 +69,18 @@ Zod schemas provide compile-time safety through TypeScript types and runtime saf
 This ensures that data from external sources (APIs, user input, local storage) actually matches the EXPECTED structure at RUNTIME, preventing issues like trying to parse HTML as JSON or accessing properties that don't exist.
 
 - Zod is very good at MAKING SURE that the things are what you think they are
+
+### as const
+
+```js
+return [useContext, Context.Provider] as const;
+```
+
+by using `as const` in the end, we explicitly, strictly say, here is an array with 2 elements.
+with the first element and second, ALWAYS like this. rather than just random things inside
+
+- useState, useDispatch uses this. that's why you always know that you have the RIGHT TYPE
+
+- as const tells TypeScript that the value is a specific, immutable tuple rather than a general array. It ensures the array cannot change size or elements, and TypeScript knows the exact type of each element at each position.
+
+This is what React hooks like useState use under the hood, which is why you get proper types for both the value and setter function when destructuring the return value.
